@@ -9,31 +9,11 @@ const logger = (req, res, next) => {
     next();
 }
 
-const privateMiddleware = (req, res, next) => {
-    const url = req.url;
-    if(url === "/protected") {
-        return res.send("<h1>Not Allowed<h1>")
-    }
-    console.log("Allowed, you may continue.")
-    next();
-}
-
 const handleHome = (req, res) => {
     return res.send("I love middlewares");
 }
 
-const handleLogin = (req, res) => {
-    return res.send({ message: "Login here."});
-}
-
-const handleProtected = (req, res) => {
-    return res.send("Welcome to the private lounge.");
-}
-
-app.get("/", logger, privateMiddleware, handleHome)
-app.get("/login", logger, privateMiddleware, handleLogin)
-app.get("/protected", logger, privateMiddleware, handleProtected)
-
+app.get("/", logger, handleHome)
 const handleListening = () => console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
 
 app.listen(PORT, handleListening) // 바닐라 JS의 click event랑 비슷하다.
